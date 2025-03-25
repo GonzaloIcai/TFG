@@ -4,7 +4,7 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from config import Config
 from routes.auth import auth  # Importación correcta
-from routes.dashboard import dashboard  # Importar el nuevo blueprintt
+from routes.dashboard import dashboard  # Importar el nuevo blueprint
 from routes.memory import memory  # Importamos el blueprint
 
 

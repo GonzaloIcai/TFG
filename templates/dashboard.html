@@ -25,7 +25,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title text-success">Ejercicios de Memoria</h5>
                         <p class="card-text">Ejercicios para mejorar la retención y el recuerdo.</p>
-                        <a href="#" class="btn btn-success">Iniciar</a>
+                        <a href="{{ url_for('memory.memory_game') }}" class="btn btn-success">Iniciar</a>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,33 @@
 
         <div class="text-center mt-5">
             <h5 class="text-secondary">Tu progreso</h5>
-            <p class="text-muted">Próximamente podrás ver tus estadísticas aquí.</p>
+        </div>
+
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-8">
+                {% if results %}
+                    <table class="table table-bordered text-center custom-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tiempo (s)</th>
+                                <th>Intentos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in results %}
+                            <tr>
+                                <td>{{ r.timestamp.strftime('%d/%m/%Y %H:%M') }}</td>
+                                <td>{{ r.time_spent }}</td>
+                                <td>{{ r.attempts }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-muted text-center">Aún no has completado ningún ejercicio de memoria.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </body>
