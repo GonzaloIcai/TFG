@@ -1,37 +1,53 @@
-const questions = [
-    {
-        series: "2, 4, 6, __",
-        options: [7, 8, 10],
-        answer: 8
-    },
-    {
-        series: "5, 10, 15, __",
-        options: [20, 18, 22],
-        answer: 20
-    },
-    {
-        series: "1, 4, 9, 16, __",
-        options: [20, 25, 36],
-        answer: 25
-    },
-    {
-        series: "100, 90, 80, __",
-        options: [60, 70, 75],
-        answer: 70
-    },
-    {
-        series: "1, 2, 4, 8, __",
-        options: [10, 12, 16],
-        answer: 16
-    }
-];
-
+let questions = [];
 let currentQuestion = 0;
 let correct = 0;
 let incorrect = 0;
 let startTime;
 
+function generateQuestion() {
+    const type = Math.random() < 0.5 ? "sum" : "mult";
+
+    let start = Math.floor(Math.random() * 5) + 1;
+    let step = Math.floor(Math.random() * 4) + 1;
+
+    let sequence = [];
+    let correct;
+
+    if (type === "sum") {
+        for (let i = 0; i < 4; i++) {
+            sequence.push(start + i * step);
+        }
+        correct = start + 4 * step;
+    } else {
+        for (let i = 0; i < 4; i++) {
+            sequence.push(start * Math.pow(step, i));
+        }
+        correct = start * Math.pow(step, 4);
+    }
+
+    const seriesStr = sequence.join(", ") + ", __";
+
+    // Crear opciones
+    const options = new Set();
+    options.add(correct);
+    while (options.size < 3) {
+        const offset = Math.floor(Math.random() * 6) + 1;
+        options.add(correct + (Math.random() < 0.5 ? -offset : offset));
+    }
+
+    return {
+        series: seriesStr,
+        options: Array.from(options).sort(() => Math.random() - 0.5),
+        answer: correct
+    };
+}
+
 function startReasoningGame() {
+    questions = [];
+    for (let i = 0; i < 5; i++) {
+        questions.push(generateQuestion());
+    }
+
     currentQuestion = 0;
     correct = 0;
     incorrect = 0;

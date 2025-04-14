@@ -16,8 +16,10 @@ function loadRound() {
     const board = document.getElementById("attention-board");
     board.innerHTML = "";
 
-    const size = 3 + round; // Aumenta la cantidad de elementos por ronda
-    const total = size * size;
+    const total = 12 + round * 4;
+    const columns = 12;
+
+    board.style.gridTemplateColumns = `repeat(${columns}, 60px)`;
 
     const correctEmoji = getRandomEmoji();
     let wrongEmoji = getRandomEmoji();
@@ -38,6 +40,7 @@ function loadRound() {
 
     startTime = Date.now();
 }
+
 
 function handleClick(isCorrect) {
     const timeTaken = (Date.now() - startTime) / 1000;
