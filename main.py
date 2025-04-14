@@ -6,6 +6,10 @@ from config import Config
 from routes.auth import auth  # Importación correcta
 from routes.dashboard import dashboard  # Importar el nuevo blueprint
 from routes.memory import memory  # Importamos el blueprint
+from routes.attention import attention
+from routes.reasoning import reasoning
+
+
 
 
 app = Flask(__name__)
@@ -29,6 +33,10 @@ def load_user(user_id):
 app.register_blueprint(auth)  # Registro del Blueprint de autenticación
 app.register_blueprint(dashboard)  # Registro del Blueprint del dashboard
 app.register_blueprint(memory)  # Registramos los ejercicios de memoria
+app.register_blueprint(attention) # Registramos los ejercicios de atencion
+app.register_blueprint(reasoning) # Registramos los ejercicios de razonamiento
+
+
 
 
 if __name__ == "__main__":

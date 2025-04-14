@@ -20,3 +20,24 @@ class MemoryResult(db.Model):
     attempts = db.Column(db.Integer)
 
     user = db.relationship('User', backref='memory_results')
+
+class AttentionResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    average_time = db.Column(db.Float)  # tiempo medio de respuesta
+    errors = db.Column(db.Integer)
+    rounds_completed = db.Column(db.Integer)
+
+    user = db.relationship('User', backref='attention_results')
+
+class ReasoningResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    correct = db.Column(db.Integer)
+    incorrect = db.Column(db.Integer)
+    time_spent = db.Column(db.Float)
+
+    user = db.relationship('User', backref='reasoning_results')
+
