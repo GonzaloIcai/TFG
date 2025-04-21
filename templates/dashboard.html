@@ -25,7 +25,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title text-success">Ejercicios de Memoria</h5>
                         <p class="card-text">Ejercicios para mejorar la retención y el recuerdo.</p>
-                        <a href="{{ url_for('memory.memory_game') }}" class="btn btn-success">Iniciar</a>
+                        <a href="{{ url_for('dashboard.jugar_memoria') }}" class="btn btn-success">Iniciar</a>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title text-info">Ejercicios de Atención</h5>
                         <p class="card-text">Mejora tu capacidad de concentración.</p>
-                        <a href="{{ url_for('attention.attention_game') }}" class="btn btn-info">Iniciar</a>
+                        <a href="{{ url_for('dashboard.jugar_atencion') }}" class="btn btn-info">Iniciar</a>
                     </div>
                 </div>
             </div>
@@ -43,10 +43,16 @@
                     <div class="card-body text-center">
                         <h5 class="card-title text-warning">Ejercicios de Razonamiento</h5>
                         <p class="card-text">Estimula el pensamiento lógico y la resolución de problemas.</p>
-                        <a href="{{ url_for('reasoning.reasoning_game') }}" class="btn btn-warning">Iniciar</a>
+                        <a href="{{ url_for('dashboard.jugar_razonamiento') }}" class="btn btn-warning">Iniciar</a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{{ url_for('analysis.informe_en_pantalla') }}" class="btn btn-outline-primary">
+                🧠 Ver informe cognitivo de prueba
+            </a>
         </div>
     </div>
 </body>

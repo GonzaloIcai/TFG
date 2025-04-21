@@ -8,6 +8,10 @@ from routes.dashboard import dashboard  # Importar el nuevo blueprint
 from routes.memory import memory  # Importamos el blueprint
 from routes.attention import attention
 from routes.reasoning import reasoning
+from routes.memory_digits import memory_digits
+from routes.attention_stroop import attention_stroop
+from routes.reasoning_pattern import reasoning_pattern
+from routes.analysis import analysis
 
 
 
@@ -35,6 +39,10 @@ app.register_blueprint(dashboard)  # Registro del Blueprint del dashboard
 app.register_blueprint(memory)  # Registramos los ejercicios de memoria
 app.register_blueprint(attention) # Registramos los ejercicios de atencion
 app.register_blueprint(reasoning) # Registramos los ejercicios de razonamiento
+app.register_blueprint(memory_digits)
+app.register_blueprint(attention_stroop)
+app.register_blueprint(reasoning_pattern)
+app.register_blueprint(analysis)
 
 
 

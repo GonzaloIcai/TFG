@@ -11,6 +11,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+    
+    #esta línea es para el testeo
+    last_report = db.Column(db.DateTime, default=None)
+
 
 class MemoryResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)

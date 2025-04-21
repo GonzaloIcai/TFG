@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe Cognitivo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .informe-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        .titulo {
+            color: #2196f3;
+        }
+        .subtitulo {
+            color: #555555;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="informe-container">
+            <h2 class="titulo text-center">🧠 Informe Cognitivo Semanal</h2>
+            <p class="subtitulo text-center">Del {{ desde.strftime("%d/%m/%Y %H:%M") }} al {{ hasta.strftime("%d/%m/%Y %H:%M") }}</p>
+            <hr>
+            <pre>{{ informe }}</pre>
+            <div class="text-center mt-4">
+                <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-primary">Volver al Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
