@@ -25,6 +25,7 @@ bcrypt = Bcrypt(app)  # Inicializar bcrypt
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "auth.login"
+login_manager.logout_view = "home"
 
 @app.route('/')
 def home():

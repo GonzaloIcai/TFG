@@ -1,3 +1,29 @@
+/* FONDO Y ESTILO DE LOGIN/REGISTRO */
+.login-register-bg {
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                url("/static/img/landing-cognitive.png") center/cover no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+    transform: scale(1.03);
+}
+
+
+/* ESTILO GENERAL */
 body {
     background-color: #f9f9f9;
 }
@@ -16,6 +42,7 @@ h1, h2, h5 {
     transform: scale(1.05);
 }
 
+/* BOTONES PERSONALIZADOS */
 .btn-primary {
     background-color: #8ecae6;
     border-color: #8ecae6;
