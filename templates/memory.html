@@ -18,6 +18,8 @@
         </div>
 
         <button class="btn btn-success mt-3" onclick="startGame()">Reiniciar Juego</button>
+        <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-primary mt-3">Salir</a>
+
     </div>
 
     <script src="{{ url_for('static', filename='memory.js') }}"></script>

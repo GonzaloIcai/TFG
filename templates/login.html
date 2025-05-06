@@ -11,6 +11,15 @@
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="login-card p-4 shadow-sm">
             <h2 class="text-center text-primary">Iniciar Sesión</h2>
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                {% if category.startswith('auth') %}
+                    <div class="alert alert-{{ 'success' if 'success' in category else 'danger' if 'error' in category else 'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
             <form method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>

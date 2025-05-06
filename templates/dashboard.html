@@ -5,55 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand text-primary" href="#">Plataforma Cognitiva</a>
-            <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="{{ url_for('static', filename='img/brain.png') }}" alt="Logo" class="logo-cerebro">
+                <span class="text-black">COGNITIV.AI</span>
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+                    <li><a class="dropdown-item" href="{{ url_for('perfil.ver_perfil') }}">👤 Mi perfil</a></li>
+                    <li><a class="dropdown-item" href="#">📅 Historial de informes</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('graficos.ver_graficos') }}">📈 Gráfico de progreso</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">🚪 Cerrar sesión</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <h2 class="text-center text-primary">Bienvenido, {{ user.username }}</h2>
+    <div class="container dashboard-welcome">
+        <h2 class="text-center text-dark">Bienvenido: {{ user.username }}</h2>
         <p class="text-center text-muted">Selecciona un ejercicio para comenzar</p>
 
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-success">Ejercicios de Memoria</h5>
-                        <p class="card-text">Ejercicios para mejorar la retención y el recuerdo.</p>
-                        <a href="{{ url_for('dashboard.jugar_memoria') }}" class="btn btn-success">Iniciar</a>
-                    </div>
+        <!-- Rutina diaria -->
+        <div class="row dashboard-rutina">
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <h5 class="card-title text-success">Ejercicios de Memoria</h5>
+                    <p class="card-text">Ejercicios para mejorar la retención y el recuerdo.</p>
+                    <p>{{ '✔️ Completado' if memoria_jugada else '❌ Pendiente' }}</p>
+                    <a href="{{ url_for('dashboard.jugar_memoria') }}" class="btn btn-success">Iniciar</a>        
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-info">Ejercicios de Atención</h5>
-                        <p class="card-text">Mejora tu capacidad de concentración.</p>
-                        <a href="{{ url_for('dashboard.jugar_atencion') }}" class="btn btn-info">Iniciar</a>
-                    </div>
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <h5 class="card-title text-info">Ejercicios de Atención</h5>
+                    <p class="card-text">Ejercicios para mejorar tu capacidad de concentración.</p>
+                    <p>{{ '✔️ Completado' if atencion_jugada else '❌ Pendiente' }}</p>
+                    <a href="{{ url_for('dashboard.jugar_atencion') }}" class="btn btn-info">Iniciar</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-warning">Ejercicios de Razonamiento</h5>
-                        <p class="card-text">Estimula el pensamiento lógico y la resolución de problemas.</p>
-                        <a href="{{ url_for('dashboard.jugar_razonamiento') }}" class="btn btn-warning">Iniciar</a>
-                    </div>
+            <div class="col-md-4 text-center">
+                <div class="card">
+                    <h5 class="card-title text-warning">Ejercicios de Razonamiento</h5>
+                    <p class="card-text">Estimula el pensamiento lógico y la resolución de problemas.</p>
+                    <p>{{ '✔️ Completado' if razonamiento_jugada else '❌ Pendiente' }}</p>
+                    <a href="{{ url_for('dashboard.jugar_razonamiento') }}" class="btn btn-warning">Iniciar</a>
                 </div>
             </div>
         </div>
 
-        <div class="text-center mt-5">
+        {% if completados_hoy %}
+            <div class="alert alert-success text-center alert-completado mt-4">
+                🎉 ¡Has completado tu rutina diaria!
+            </div>
+        {% endif %}
+
+        <div class="text-center informe-boton">
             <a href="{{ url_for('analysis.informe_en_pantalla') }}" class="btn btn-outline-primary">
                 🧠 Ver informe cognitivo de prueba
             </a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

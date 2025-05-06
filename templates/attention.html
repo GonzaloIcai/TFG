@@ -14,6 +14,8 @@
         <div id="attention-board" class="game-board attention-board mt-4"></div>
 
         <button class="btn btn-info mt-4" onclick="startAttentionGame()">Reiniciar</button>
+        <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-primary mt-3">Salir</a>
+
     </div>
 
     <script src="{{ url_for('static', filename='attention.js') }}"></script>
