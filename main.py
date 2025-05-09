@@ -14,6 +14,7 @@ from routes.reasoning_pattern import reasoning_pattern
 from routes.analysis import analysis
 from routes.perfil import perfil
 from routes.graficos import graficos
+from routes.historial import historial
 
 
 app = Flask(__name__)
@@ -46,6 +47,7 @@ app.register_blueprint(attention_stroop)    # Registramos los ejercicios de aten
 app.register_blueprint(reasoning_pattern)   # Registramos los ejercicios de atencion
 app.register_blueprint(perfil)
 app.register_blueprint(graficos)
+app.register_blueprint(historial)
 
 
 if __name__ == "__main__":

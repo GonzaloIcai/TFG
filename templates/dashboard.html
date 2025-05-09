@@ -23,7 +23,7 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
                     <li><a class="dropdown-item" href="{{ url_for('perfil.ver_perfil') }}">👤 Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="#">📅 Historial de informes</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('historial.ver_historial') }}">📅 Historial de informes</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('graficos.ver_graficos') }}">📈 Gráfico de progreso</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">🚪 Cerrar sesión</a></li>

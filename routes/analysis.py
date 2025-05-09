@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, render_template
 from flask_login import login_required, current_user
-from models.database import db, MemoryResult, AttentionResult, ReasoningResult
+from models.database import db, MemoryResult, AttentionResult, ReasoningResult, Informe
 from datetime import datetime, timedelta
 import openai
-import os  # Para acceder a la variable de entorno
+import os
 
 analysis = Blueprint('analysis', __name__)
 
@@ -96,6 +96,15 @@ def generar_informe_semanal():
     prompt = construir_prompt(informe)
     informe_gpt = generar_analisis_gpt(prompt)
 
+    # Guardar en la base de datos
+    nuevo_informe = Informe(
+        user_id=current_user.id,
+        contenido=informe_gpt,
+        fecha=datetime.now()
+    )
+    db.session.add(nuevo_informe)
+    db.session.commit()
+
     return jsonify({
         "datos": informe,
         "informe": informe_gpt
@@ -144,6 +153,15 @@ def generar_informe_desde_ultimo():
 
     prompt = construir_prompt(informe)
     analisis = generar_analisis_gpt(prompt)
+
+    # Guardar en la base de datos
+    nuevo_informe = Informe(
+        user_id=current_user.id,
+        contenido=analisis,
+        fecha=datetime.now()
+    )
+    db.session.add(nuevo_informe)
+    db.session.commit()
 
     usuario.last_report = hasta_fecha
     db.session.commit()
@@ -195,6 +213,15 @@ def informe_en_pantalla():
 
     prompt = construir_prompt(informe)
     analisis = generar_analisis_gpt(prompt)
+
+    # Guardar en la base de datos
+    nuevo_informe = Informe(
+        user_id=current_user.id,
+        contenido=analisis,
+        fecha=datetime.now()
+    )
+    db.session.add(nuevo_informe)
+    db.session.commit()
 
     usuario.last_report = hasta_fecha
     db.session.commit()
