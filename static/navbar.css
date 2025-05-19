@@ -1,0 +1,15 @@
+.logo-cerebro {
+    width: 30px;
+    height: 30px;
+}
+
+.volver-btn {
+    border-color: #dc3545;
+    color: #dc3545;
+    transition: 0.3s;
+}
+
+.volver-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
