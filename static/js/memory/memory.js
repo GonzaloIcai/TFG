@@ -1,3 +1,4 @@
+
 const cardsArray = [
     "🍎", "🍎", "🍌", "🍌", "🍒", "🍒", "🍇", "🍇",
     "🍉", "🍉", "🥑", "🥑", "🍍", "🍍", "🥕", "🥕"
@@ -11,6 +12,7 @@ function shuffle(array) {
 }
 
 function startGame() {
+    document.getElementById("juegoMemoria").classList.remove("d-none"); 
     shuffledCards = shuffle([...cardsArray]);
     matchedPairs = 0;
     flippedCards = [];
@@ -20,7 +22,7 @@ function startGame() {
 }
 
 function renderBoard() {
-    const board = document.querySelector(".game-board");
+    const board = document.querySelector(".memory-board");
     board.innerHTML = "";
     shuffledCards.forEach((symbol, index) => {
         const card = document.createElement("div");
@@ -40,7 +42,7 @@ function flipCard(event) {
         flippedCards.push(index);
 
         if (flippedCards.length === 2) {
-            setTimeout(checkMatch, 500);
+            setTimeout(checkMatch, 1500);
         }
     }
 }
@@ -53,6 +55,9 @@ function checkMatch() {
 
     if (shuffledCards[first] === shuffledCards[second]) {
         matchedPairs++;
+
+        cards[first].classList.add("matched");
+        cards[second].classList.add("matched");
 
         if (matchedPairs === cardsArray.length / 2) {
             const endTime = Date.now();
@@ -88,4 +93,8 @@ function checkMatch() {
     flippedCards = [];
 }
 
-document.addEventListener("DOMContentLoaded", startGame);
+document.addEventListener("DOMContentLoaded", () => {
+    const instruccionesModal = new bootstrap.Modal(document.getElementById('instruccionesModal'));
+    instruccionesModal.show();
+});
+

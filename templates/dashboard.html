@@ -6,8 +6,8 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body class="bg-light">
@@ -43,7 +43,7 @@
                     <h5 class="card-title text-success">Ejercicios de Memoria</h5>
                     <p class="card-text">Ejercicios para mejorar la retención y el recuerdo.</p>
                     <p>{{ '✔️ Completado' if memoria_jugada else '❌ Pendiente' }}</p>
-                    <a href="{{ url_for('dashboard.jugar_memoria') }}" class="btn btn-success">Iniciar</a>        
+                    <a href="{{ url_for('dashboard.jugar_memoria') }}" class="btn iniciar-memoria">Iniciar</a>        
                 </div>
             </div>
             <div class="col-md-4 text-center">
@@ -51,7 +51,7 @@
                     <h5 class="card-title text-info">Ejercicios de Atención</h5>
                     <p class="card-text">Ejercicios para mejorar tu capacidad de concentración.</p>
                     <p>{{ '✔️ Completado' if atencion_jugada else '❌ Pendiente' }}</p>
-                    <a href="{{ url_for('dashboard.jugar_atencion') }}" class="btn btn-info">Iniciar</a>
+                    <a href="{{ url_for('dashboard.jugar_atencion') }}" class="btn iniciar-atencion">Iniciar</a>
                 </div>
             </div>
             <div class="col-md-4 text-center">
@@ -59,7 +59,7 @@
                     <h5 class="card-title text-warning">Ejercicios de Razonamiento</h5>
                     <p class="card-text">Estimula el pensamiento lógico y la resolución de problemas.</p>
                     <p>{{ '✔️ Completado' if razonamiento_jugada else '❌ Pendiente' }}</p>
-                    <a href="{{ url_for('dashboard.jugar_razonamiento') }}" class="btn btn-warning">Iniciar</a>
+                    <a href="{{ url_for('dashboard.jugar_razonamiento') }}" class="btn iniciar-razona">Iniciar</a>
                 </div>
             </div>
         </div>

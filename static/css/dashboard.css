@@ -1,0 +1,116 @@
+/* ─────────────── ESTILO GENERAL ─────────────── */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo-cerebro {
+    height: 28px; 
+    width: auto;
+}
+
+
+/* ─────────────── BIENVENIDA DASHBOARD ─────────────── */
+.dashboard-welcome {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* ─────────────── SECCIÓN RUTINA ─────────────── */
+.dashboard-rutina .card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+    padding: 1rem;
+}
+
+.dashboard-rutina .card:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-rutina .card-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+
+/* ─────────────── TARJETAS INICIO (opcionales) ─────────────── */
+.dashboard-inicio .card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+}
+
+.dashboard-inicio .card:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-inicio .card-title {
+    font-size: 1.3rem;
+}
+
+.dashboard-inicio .btn {
+    width: 100%;
+}
+
+
+/* ─────────────── MENSAJE DE RUTINA COMPLETADA ─────────────── */
+.alert-completado {
+    font-size: 1.1rem;
+    padding: 1rem;
+}
+
+
+/* ─────────────── BOTÓN DE INFORME ─────────────── */
+.informe-boton {
+    margin-top: 2rem;
+}
+
+
+/* ─────────────── BOTONES PERSONALIZADOS ─────────────── */
+.iniciar-memoria {
+    background-color: #90be6d;
+    border-color: #90be6d;
+    color: black;
+}
+
+.iniciar-memoria:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+.iniciar-atencion {
+    background-color: #56cfe1;
+    border-color: #56cfe1;
+    color: black;
+}
+
+.iniciar-atencion:hover {
+    background-color: #3ac4ff;
+    border-color: #3ac4ff;
+    color: white;
+}
+
+.iniciar-razona {
+    background-color: #f9c74f;
+    border-color: #f9c74f;
+    color: black;
+}
+
+.iniciar-razona:hover {
+    background-color: #e6a100;
+    border-color: #e6a100;
+    color: white;
+}
+
+.btn-outline-primary {
+    color: #219ebc;
+    border-color: #219ebc;
+    transition: 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #219ebc;
+    color: white;
+}

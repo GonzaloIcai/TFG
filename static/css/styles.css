@@ -1,0 +1,202 @@
+/* ─────────────── ESTILOS GENERALES ─────────────── */
+body {
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h5 {
+    font-family: 'Arial', sans-serif;
+}
+
+.card {
+    border-radius: 15px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* ─────────────── TÍTULOS DE PÁGINA ─────────────── */
+.titulo-pagina {
+    color: #000;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+
+/* ─────────────── BOTONES PERSONALIZADOS ─────────────── */
+.btn-primary {
+    background-color: #8ecae6;
+    border-color: #8ecae6;
+}
+
+.btn-primary:hover {
+    background-color: #219ebc; 
+    border-color: #219ebc;
+    color: white;
+}
+
+.btn-success {
+    background-color: #90be6d;
+    border-color: #90be6d;
+}
+
+.btn-success:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+.btn-perfil {
+    background-color: #90be6d;
+    border-color: #90be6d;
+    color: black;
+}
+
+.btn-perfil:hover {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+}
+
+
+/* ─────────────── LOGIN / REGISTRO ─────────────── */
+.login-register-bg {
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                url("/static/img/landing-cognitive.png") center/cover no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.login-card:hover {
+    transform: scale(1.03);
+}
+
+
+/* ─────────────── JUEGO DE MEMORIA ─────────────── */
+
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 90px);
+    row-gap: 20px;
+    column-gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.memory-card {
+    width: 90px;
+    height: 90px;
+    background-color: #ffffff;
+    border: 2px solid #ddd;
+    font-size: 2.6em;
+    text-align: center;
+    line-height: 90px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.memory-card:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.memory-card.matched {
+    background-color: #d4edda; /* verde clarito tipo Bootstrap */
+    border-color: #a3d5b1;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+    transform: scale(1.05);
+}
+
+
+/* ─────────────── JUEGO DE ATENCIÓN ─────────────── */
+.attention-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+
+/* ─────────────── JUEGO DE RAZONAMIENTO ─────────────── */
+.reasoning-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+
+/* ─────────────── TABLA DE RESULTADOS ─────────────── */
+.custom-table {
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table th {
+    background-color: #f0f0f0;
+    color: #555555;
+    font-weight: 600;
+}
+
+.custom-table td {
+    vertical-align: middle;
+}
+
+.custom-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+/* ─────────────── HISTORIAL E INFORMES ─────────────── */
+.accordion-button {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.accordion-body {
+    background-color: #ffffff;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.search-input {
+    margin-bottom: 20px;
+}
+
+/* ─────────────── PERFIL ─────────────── */
+.perfil-card {
+    max-width: 450px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-top: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}

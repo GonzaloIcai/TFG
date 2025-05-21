@@ -1,0 +1,83 @@
+/* ─────────────── HERO SECTION (Landing principal) ─────────────── */
+.hero {
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                url("/static/img/landing-cognitive.png") center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+
+/* ─────────────── HERO CONTENT BOX ─────────────── */
+.hero-content {
+    background-color: rgba(255, 255, 255, 0.85); 
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+}
+
+
+/* ─────────────── TEXTO DEL HERO ─────────────── */
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin: 20px 0;
+    color: #333;
+}
+
+
+/* ─────────────── BOTONES DEL HERO ─────────────── */
+.hero .btn {
+    font-size: 1.2rem;
+    padding: 10px 25px;
+    margin: 10px;
+}
+
+/* ─────────────── BOTONES DE INICIO ─────────────── */
+.btn-inicio {
+    background-color: #2eb4d6;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-inicio:hover {
+    background-color: #219ebc;
+    color: white;
+}
+
+.btn-registro {
+    background-color: #90be6d;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.btn-registro:hover {
+    background-color: #4caf50;
+    color: white;
+}
