@@ -7,7 +7,7 @@ attention = Blueprint('attention', __name__)  # ✅ Definimos el blueprint
 @attention.route('/attention')
 @login_required
 def attention_game():
-    return render_template('attention.html')
+    return render_template('attention/attention.html')
 
 @attention.route('/attention/save', methods=['POST'])
 @login_required

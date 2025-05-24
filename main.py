@@ -10,7 +10,7 @@ from routes.attention import attention
 from routes.reasoning import reasoning
 from routes.memory_digits import memory_digits
 from routes.attention_stroop import attention_stroop
-from routes.reasoning_pattern import reasoning_pattern
+from routes.reasoning_raven import reasoning_raven
 from routes.analysis import analysis
 from routes.perfil import perfil
 from routes.graficos import graficos
@@ -44,7 +44,7 @@ app.register_blueprint(attention)           # Registramos los ejercicios de aten
 app.register_blueprint(reasoning)           # Registramos los ejercicios de razonamiento
 app.register_blueprint(memory_digits)       # Registramos los ejercicios de memoria  
 app.register_blueprint(attention_stroop)    # Registramos los ejercicios de atencion
-app.register_blueprint(reasoning_pattern)   # Registramos los ejercicios de atencion
+app.register_blueprint(reasoning_raven)   # Registramos los ejercicios de atencion
 app.register_blueprint(perfil)
 app.register_blueprint(graficos)
 app.register_blueprint(historial)

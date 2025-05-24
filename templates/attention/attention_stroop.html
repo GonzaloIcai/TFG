@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Stroop Simplificado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-light text-center">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="{{ url_for('static', filename='img/brain.png') }}" alt="Logo" class="logo-cerebro">
+                <span class="text-black">COGNITIV.AI</span>
+            </a>
+            <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-danger volver-btn">Volver</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="titulo-pagina">Ejercicio de Atención: Stroop Simplificado</h2>
+        <p class="text-muted">3 son iguales… ¿cuál es distinto?</p>
+
+        <div id="stroop-board" class="my-4"></div>
+
+        <button onclick="startStroop()" class="btn btn-info">Reiniciar</button>
+        <div id="feedback" class="mt-3 text-secondary"></div>
+    </div>
+
+    <!-- Modal de instrucciones -->
+    <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+                </div>
+                <div class="modal-body text-start">
+                    <p>Observa los 4 símbolos en pantalla:</p>
+                    <ul>
+                        <li>3 son iguales, 1 es distinto.</li>
+                        <li>Haz clic sobre el que sea diferente.</li>
+                        <li>Se miden tus errores y el tiempo promedio de respuesta.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-iniciar" class="btn btn-info w-100">Iniciar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/attention/attention_stroop.js') }}"></script>
+</body>
+</html>

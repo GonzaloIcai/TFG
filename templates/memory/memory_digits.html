@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Series de Dígitos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body class="bg-light">
-    <div class="container text-center mt-5">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="{{ url_for('static', filename='img/brain.png') }}" alt="Logo" class="logo-cerebro">
+                <span class="text-black">COGNITIV.AI</span>
+            </a>
+            <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-danger volver-btn">Volver</a>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO DEL JUEGO (OCULTO HASTA QUE SE INICIA) -->
+    <div id="juegoMemoriaDigits" class="container text-center mt-5 d-none">
         <h2 class="titulo-pagina">Juego de Memoria: Series de Dígitos</h2>
         <p class="text-muted">Memoriza la secuencia y repítela en orden.</p>
 
@@ -14,12 +30,34 @@
 
         <input type="text" id="user-input" class="form-control w-50 mx-auto" placeholder="Escribe la secuencia (ej: 3 1 4)" />
         <button class="btn btn-success mt-3" onclick="checkSequence()">Enviar</button>
-        <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-primary mt-3">Salir</a>
-
 
         <div id="feedback" class="mt-3 fw-bold"></div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/memory/digits.js') }}"></script>
+    <!-- MODAL INSTRUCCIONES -->
+    <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+                </div>
+                <div class="modal-body text-start">
+                    <p>Este juego pone a prueba tu memoria inmediata con series de números:</p>
+                    <ul>
+                        <li>Verás una secuencia breve de dígitos (ej. 3 - 5 - 1).</li>
+                        <li>Deberás escribirla de memoria exactamente en el mismo orden.</li>
+                        <li>Se completan 5 rondas en total.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal" onclick="startGame()">Iniciar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y tu script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/memory/memory_digits.js') }}"></script>
 </body>
 </html>

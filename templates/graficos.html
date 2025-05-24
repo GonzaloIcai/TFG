@@ -44,109 +44,80 @@
     <script>
         // Datos enviados desde Flask
         const memoriaLabels = {{ memoria_labels | safe }};
-        const memoriaIntentos = {{ memoria_intentos | safe }};
-        const memoriaTiempo = {{ memoria_tiempo | safe }};
+        const memoriaErrores = {{ memoria_errores | safe }};
 
         const atencionLabels = {{ atencion_labels | safe }};
         const atencionErrores = {{ atencion_errores | safe }};
-        const atencionPromedio = {{ atencion_promedio | safe }};
-        const atencionRondas = {{ atencion_rondas | safe }};
 
         const razonamientoLabels = {{ razonamiento_labels | safe }};
-        const razonamientoCorrectas = {{ razonamiento_correctas | safe }};
-        const razonamientoIncorrectas = {{ razonamiento_incorrectas | safe }};
-        const razonamientoTiempo = {{ razonamiento_tiempo | safe }};
+        const razonamientoErrores = {{ razonamiento_errores | safe }};
 
-        // Gráfico Memoria
+        // === Gráfico MEMORIA ===
         new Chart(document.getElementById('memoriaChart'), {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: memoriaLabels,
-                datasets: [
-                    {
-                        label: 'Intentos',
-                        data: memoriaIntentos,
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)'
-                    },
-                    {
-                        label: 'Tiempo total (s)',
-                        data: memoriaTiempo,
-                        backgroundColor: 'rgba(153, 102, 255, 0.6)'
-                    }
-                ]
+                datasets: [{
+                    label: 'Errores de Memoria',
+                    data: memoriaErrores,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.3,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)'
+                }]
             },
             options: {
                 responsive: true,
                 scales: {
-                    x: { stacked: false },
-                    y: { beginAtZero: true }
+                    y: { beginAtZero: true },
+                    x: { ticks: { autoSkip: false } }
                 }
             }
         });
 
-        // Gráfico Atención
+        // === Gráfico ATENCIÓN ===
         new Chart(document.getElementById('atencionChart'), {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: atencionLabels,
-                datasets: [
-                    {
-                        label: 'Errores',
-                        data: atencionErrores,
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
-                    },
-                    {
-                        label: 'Tiempo promedio (s)',
-                        data: atencionPromedio,
-                        backgroundColor: 'rgba(255, 206, 86, 0.6)'
-                    },
-                    {
-                        label: 'Rondas completadas',
-                        data: atencionRondas,
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
-                    }
-                ]
+                datasets: [{
+                    label: 'Errores de Atención',
+                    data: atencionErrores,
+                    fill: false,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    tension: 0.3,
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)'
+                }]
             },
             options: {
                 responsive: true,
                 scales: {
-                    x: { stacked: false },
-                    y: { beginAtZero: true }
+                    y: { beginAtZero: true },
+                    x: { ticks: { autoSkip: false } }
                 }
             }
         });
 
-        // Gráfico Razonamiento
+        // === Gráfico RAZONAMIENTO ===
         new Chart(document.getElementById('razonamientoChart'), {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: razonamientoLabels,
-                datasets: [
-                    {
-                        label: 'Correctas',
-                        data: razonamientoCorrectas,
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)'
-                    },
-                    {
-                        label: 'Incorrectas',
-                        data: razonamientoIncorrectas,
-                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
-                    },
-                    {
-                        label: 'Tiempo total (s)',
-                        data: razonamientoTiempo,
-                        backgroundColor: 'rgba(153, 102, 255, 0.6)'
-                    }
-                ]
+                datasets: [{
+                    label: 'Errores de Razonamiento',
+                    data: razonamientoErrores,
+                    fill: false,
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    tension: 0.3,
+                    pointBackgroundColor: 'rgba(255, 206, 86, 1)'
+                }]
             },
             options: {
                 responsive: true,
                 scales: {
-                    x: { stacked: false },
-                    y: { beginAtZero: true }
+                    y: { beginAtZero: true },
+                    x: { ticks: { autoSkip: false } }
                 }
             }
         });
     </script>
-</body>
-</html>

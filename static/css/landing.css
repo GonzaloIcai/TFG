@@ -1,7 +1,6 @@
 /* ─────────────── HERO SECTION (Landing principal) ─────────────── */
 .hero {
-    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
-                url("/static/img/landing-cognitive.png") center/cover no-repeat;
+    background:url("/static/img/fondo.png") center/cover no-repeat;
     min-height: 100vh;
     display: flex;
     flex-direction: column;

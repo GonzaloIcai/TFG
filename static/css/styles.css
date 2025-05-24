@@ -67,8 +67,7 @@ h1, h2, h5 {
 
 /* ─────────────── LOGIN / REGISTRO ─────────────── */
 .login-register-bg {
-    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
-                url("/static/img/landing-cognitive.png") center/cover no-repeat;
+    background:url("/static/img/login_register.png") center/cover no-repeat;
     min-height: 100vh;
     margin: 0;
     padding: 0;
@@ -137,6 +136,24 @@ h1, h2, h5 {
     padding: 0 10px;
 }
 
+.stroop-btn {
+    font-size: 2rem;
+    padding: 0.6rem 1.2rem;
+    border: 2px solid #ddd;
+    margin: 0.5rem;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    background-color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.stroop-btn:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
 
 /* ─────────────── JUEGO DE RAZONAMIENTO ─────────────── */
 .reasoning-board {
@@ -146,6 +163,25 @@ h1, h2, h5 {
     justify-content: center;
     margin-top: 20px;
     padding: 0 10px;
+}
+
+.btn-opcion {
+    transition: all 0.3s ease;
+}
+
+.btn-opcion:hover {
+    background-color: #c9c9c9 !important;
+}
+
+.btn-correcta {
+    background-color: #d4edda !important; /* verde */
+    border-color: #a3d5b1;
+    color: rgb(0, 0, 0) !important;
+}
+
+.btn-incorrecta {
+    background-color: #c5626c !important; /* rojo */
+    color: rgb(0, 0, 0) !important;
 }
 
 

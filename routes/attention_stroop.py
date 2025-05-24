@@ -6,4 +6,4 @@ attention_stroop = Blueprint('attention_stroop', __name__)
 @attention_stroop.route('/attention/stroop')
 @login_required
 def stroop_game():
-    return render_template('attention_stroop.html')
+    return render_template('attention/attention_stroop.html')

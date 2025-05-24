@@ -7,7 +7,7 @@ reasoning = Blueprint('reasoning', __name__)
 @reasoning.route('/reasoning')
 @login_required
 def reasoning_game():
-    return render_template('reasoning.html')
+    return render_template('reasoning/reasoning.html')
 
 @reasoning.route('/reasoning/save', methods=['POST'])
 @login_required

@@ -21,7 +21,7 @@ function generateSequence(length = 5) {
     setTimeout(() => {
         document.getElementById("sequence").textContent = "Ahora escríbela 👇";
         startTime = Date.now();
-    }, 3000);
+    }, 4000);
 }
 
 function checkSequence() {
@@ -34,7 +34,7 @@ function checkSequence() {
     const feedback = document.getElementById("feedback");
 
     if (isCorrect) {
-        feedback.textContent = `¡Correcto! Has tardado ${timeSpent} segundos.`;
+        feedback.textContent = `✅ ¡Correcto! Has tardado ${timeSpent} segundos.`;
         saveResult(timeSpent);
     } else {
         feedback.textContent = `❌ Incorrecto. La secuencia era: ${sequence.join(" ")}`;
@@ -58,6 +58,13 @@ function saveResult(tiempo) {
     }).then(res => console.log("Guardado!"));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function startGame() {
+    document.getElementById("juegoMemoriaDigits").classList.remove("d-none");
     generateSequence();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const instruccionesModal = new bootstrap.Modal(document.getElementById('instruccionesModal'));
+    instruccionesModal.show();
 });
+

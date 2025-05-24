@@ -19,7 +19,7 @@ atencion_juegos = itertools.cycle([
 
 razonamiento_juegos = itertools.cycle([
     ('reasoning.reasoning_game', "Serie Numérica"),
-    ('reasoning_pattern.pattern_game', "Adivina el Patrón Visual")
+    ('reasoning_raven.raven_game', "Adivina el Patrón Visual")
 ])
 
 @dashboard.route('/dashboard')
