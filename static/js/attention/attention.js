@@ -1,35 +1,27 @@
-// Emojis agrupados por categoría visual
-const emojiGrupos = {
-    animales: ["🐶", "🐱", "🐭", "🐰", "🐼", "🦊", "🐸", "🐵"],
-    frutas: ["🍎", "🍌", "🍇", "🍓", "🍉", "🍍", "🥝"],
-    objetos: ["⚽", "🏀", "🏈", "⚾", "🥎", "🏐", "🏓", "🎾"],
-    caritas: ["😀", "😅", "😂", "😍", "😎", "😡", "😭", "🤓"]
-};
+const emojiPairs = [
+    ["😀", "😃"], ["✋", "🖐"], ["🧒", "👦"], ["👩‍🍳", "👨‍🍳"],
+    ["👨‍🏫", "👩‍🏫"], ["👩‍⚕️", "👨‍⚕️"], ["👨‍🎓", "👩‍🎓"],
+    ["👨‍🚒", "👩‍🚒"], ["👨‍✈️", "👩‍✈️"], ["👨‍🔧", "👩‍🔧"],
+    ["👨‍🌾", "👩‍🌾"], ["👨‍🎨", "👩‍🎨"], ["🧑‍🏫", "👩‍🏫"],
+    ["🧑‍⚕️", "👨‍⚕️"], ["🧑‍🔬", "👩‍🔬"], ["🧑‍🍳", "👩‍🍳"],
+    ["😐", "😶"], ["🙂", "😊"], ["😯", "😲"],
+    ["🌕", "🌝"], ["🐶", "🐕"], ["🍏", "🍎"],
+    ["💡", "🔦"], ["📕", "📗"], ["🧊", "❄️"], ["🪙", "💰"]
+];
 
+let usedPairs = [];
 let round = 1;
-let maxRounds = 5;
+const maxRounds = 5;
 let startTime;
 let responseTimes = [];
 let errors = 0;
-
-function getRandomFromGroup(group) {
-    return group[Math.floor(Math.random() * group.length)];
-}
-
-function getTwoDistinctGroups() {
-    const keys = Object.keys(emojiGrupos);
-    const baseIndex = Math.floor(Math.random() * keys.length);
-    let diffIndex;
-    do {
-        diffIndex = Math.floor(Math.random() * keys.length);
-    } while (diffIndex === baseIndex);
-    return [emojiGrupos[keys[baseIndex]], emojiGrupos[keys[diffIndex]]];
-}
+let correctIndexGlobal = null;
 
 function startAttentionGame() {
     round = 1;
-    responseTimes = [];
     errors = 0;
+    usedPairs = [];
+    responseTimes = [];
     loadRound();
 }
 
@@ -37,73 +29,71 @@ function loadRound() {
     const board = document.getElementById("attention-board");
     board.innerHTML = "";
 
-    const total = 12 + round * 4;
-    const columns = 12;
+    if (usedPairs.length === emojiPairs.length) usedPairs = []; // Reinicio total si ya se usaron todos los pares
 
-    board.style.gridTemplateColumns = `repeat(${columns}, 60px)`;
+    let pair;
+    do {
+        pair = emojiPairs[Math.floor(Math.random() * emojiPairs.length)];
+    } while (usedPairs.includes(pair.toString()));
 
-    const [grupoBase, grupoDiferente] = getTwoDistinctGroups();
+    usedPairs.push(pair.toString());
 
-    const correctEmoji = getRandomFromGroup(grupoBase);
-    const wrongEmoji = getRandomFromGroup(grupoDiferente);
-
-    const differentIndex = Math.floor(Math.random() * total);
+    const [emoji1, emoji2] = pair;
+    const total = 25;
+    const correctIndex = Math.floor(Math.random() * total);
+    correctIndexGlobal = correctIndex;
 
     for (let i = 0; i < total; i++) {
-        const cell = document.createElement("div");
-        cell.classList.add("memory-card");
-        cell.style.fontSize = "2rem";
-        cell.textContent = (i === differentIndex) ? wrongEmoji : correctEmoji;
-        cell.onclick = () => handleClick(i === differentIndex);
-        board.appendChild(cell);
+        const div = document.createElement("div");
+        div.className = "attention-card";
+        div.textContent = (i === correctIndex) ? emoji2 : emoji1;
+        div.onclick = () => handleClick(i, div);
+        board.appendChild(div);
     }
 
     startTime = Date.now();
 }
 
-function handleClick(isCorrect) {
+function handleClick(index, clickedDiv) {
     const timeTaken = (Date.now() - startTime) / 1000;
     responseTimes.push(timeTaken);
 
-    if (isCorrect) {
+    const board = document.getElementById("attention-board");
+    const allCards = board.querySelectorAll(".attention-card");
+
+    if (index === correctIndexGlobal) {
+        clickedDiv.classList.add("correct");
+    } else {
+        clickedDiv.classList.add("incorrect");
+        allCards[correctIndexGlobal].classList.add("correct");
+        errors++;
+    }
+
+    allCards.forEach(card => card.onclick = null); // deshabilita clics
+
+    setTimeout(() => {
         if (round < maxRounds) {
             round++;
             loadRound();
         } else {
             endGame();
         }
-    } else {
-        errors++;
-        alert("¡Ese no es el emoji diferente! Intenta de nuevo.");
-    }
+    }, 1200);
 }
 
 function endGame() {
     const averageTime = (responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length).toFixed(2);
-    alert(`¡Juego terminado!\nTiempo promedio de respuesta: ${averageTime}s\nErrores: ${errors}`);
+    alert(`¡Juego terminado!\nTiempo promedio: ${averageTime}s\nErrores: ${errors}`);
 
-    // Guardar resultados en Flask
     fetch("/attention/save", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             average_time: parseFloat(averageTime),
             errors: errors,
             rounds_completed: round
         })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Resultado de atención guardado correctamente");
-        } else {
-            console.error("Error al guardar resultado de atención");
-        }
-    })
-    .catch(error => {
-        console.error("Error de red:", error);
-    });
+    }).then(res => console.log("Resultado guardado."));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -114,8 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
         instruccionesModal.hide();
         setTimeout(() => {
             document.body.classList.remove('modal-open');
-            const backdrop = document.querySelector('.modal-backdrop');
-            if (backdrop) backdrop.remove();
+            document.querySelector('.modal-backdrop')?.remove();
             startAttentionGame();
         }, 300);
     });

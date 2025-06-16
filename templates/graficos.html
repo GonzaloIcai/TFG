@@ -7,6 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .grafico-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin: 1rem;
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -19,105 +30,133 @@
         </div>
     </nav>
 
-    <div class="container my-5">
-        <h2 class="titulo-pagina">📈 Gráficos de Progreso</h2>
+    <div class="container my-4">
+        <h2 class="titulo-pagina text-center">📈 Gráficos de Progreso</h2>
 
-        <!-- Gráfico de Memoria -->
-        <div class="mb-5">
-            <h4 class="text-success text-center">Memoria</h4>
-            <canvas id="memoriaChart"></canvas>
+        <!-- Filtro por mes -->
+        <div class="text-center mb-4">
+            <label for="mesSeleccionado" class="form-label">Selecciona un mes:</label>
+            <input type="month" id="mesSeleccionado" class="form-control w-auto d-inline-block mx-2">
+            <button class="btn btn-primary" onclick="filtrarPorMes()">Filtrar</button>
         </div>
 
-        <!-- Gráfico de Atención -->
-        <div class="mb-5">
-            <h4 class="text-info text-center">Atención</h4>
-            <canvas id="atencionChart"></canvas>
-        </div>
+        <div class="d-flex flex-wrap justify-content-center">
+            <!-- Gráfico de Memoria -->
+            <div class="grafico-card">
+                <h5 class="text-success text-center">Memoria</h5>
+                <canvas id="memoriaChart"></canvas>
+            </div>
 
-        <!-- Gráfico de Razonamiento -->
-        <div class="mb-5">
-            <h4 class="text-warning text-center">Razonamiento</h4>
-            <canvas id="razonamientoChart"></canvas>
+            <!-- Gráfico de Atención -->
+            <div class="grafico-card">
+                <h5 class="text-danger text-center">Atención</h5>
+                <canvas id="atencionChart"></canvas>
+            </div>
+
+            <!-- Gráfico de Razonamiento -->
+            <div class="grafico-card">
+                <h5 class="text-warning text-center">Razonamiento</h5>
+                <canvas id="razonamientoChart"></canvas>
+            </div>
         </div>
     </div>
 
     <script>
-        // Datos enviados desde Flask
         const memoriaLabels = {{ memoria_labels | safe }};
         const memoriaErrores = {{ memoria_errores | safe }};
-
         const atencionLabels = {{ atencion_labels | safe }};
         const atencionErrores = {{ atencion_errores | safe }};
-
         const razonamientoLabels = {{ razonamiento_labels | safe }};
         const razonamientoErrores = {{ razonamiento_errores | safe }};
 
-        // === Gráfico MEMORIA ===
-        new Chart(document.getElementById('memoriaChart'), {
-            type: 'line',
-            data: {
-                labels: memoriaLabels,
-                datasets: [{
-                    label: 'Errores de Memoria',
-                    data: memoriaErrores,
-                    fill: false,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    tension: 0.3,
-                    pointBackgroundColor: 'rgba(75, 192, 192, 1)'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true },
-                    x: { ticks: { autoSkip: false } }
-                }
-            }
-        });
+        let memoriaChart, atencionChart, razonamientoChart;
 
-        // === Gráfico ATENCIÓN ===
-        new Chart(document.getElementById('atencionChart'), {
-            type: 'line',
-            data: {
-                labels: atencionLabels,
-                datasets: [{
-                    label: 'Errores de Atención',
-                    data: atencionErrores,
-                    fill: false,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    tension: 0.3,
-                    pointBackgroundColor: 'rgba(255, 99, 132, 1)'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true },
-                    x: { ticks: { autoSkip: false } }
+       function crearGrafico(canvasId, label, labels, data, color) {
+            return new Chart(document.getElementById(canvasId), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        fill: false,
+                        borderColor: color,
+                        tension: 0.3,
+                        pointBackgroundColor: color
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1,       // Saltos de 1 en el eje Y
+                                precision: 0,      // Sin decimales
+                                callback: function(value) {
+                                    // Solo mostrar si es número entero
+                                    return Number.isInteger(value) ? value : null;
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                autoSkip: false,
+                                callback: function(value, index, ticks) {
+                                    // Extrae el día (formato '01-May') y convierte a número
+                                    const dia = parseInt(this.getLabelForValue(value).split("-")[0]);
+                                    return dia % 2 === 1 ? this.getLabelForValue(value) : "";
+                                },
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
 
-        // === Gráfico RAZONAMIENTO ===
-        new Chart(document.getElementById('razonamientoChart'), {
-            type: 'line',
-            data: {
-                labels: razonamientoLabels,
-                datasets: [{
-                    label: 'Errores de Razonamiento',
-                    data: razonamientoErrores,
-                    fill: false,
-                    borderColor: 'rgba(255, 206, 86, 1)',
-                    tension: 0.3,
-                    pointBackgroundColor: 'rgba(255, 206, 86, 1)'
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true },
-                    x: { ticks: { autoSkip: false } }
-                }
-            }
-        });
+
+        function inicializarGraficos() {
+            memoriaChart = crearGrafico('memoriaChart', 'Errores de Memoria', memoriaLabels, memoriaErrores, 'rgba(75, 192, 192, 1)');
+            atencionChart = crearGrafico('atencionChart', 'Errores de Atención', atencionLabels, atencionErrores, 'rgba(255, 99, 132, 1)');
+            razonamientoChart = crearGrafico('razonamientoChart', 'Errores de Razonamiento', razonamientoLabels, razonamientoErrores, 'rgba(255, 206, 86, 1)');
+        }
+
+        function filtrarPorMes() {
+            const mes = document.getElementById("mesSeleccionado").value; // formato: "2024-05"
+            if (!mes) return;
+
+            const [a, m] = mes.split("-");
+            const esDelMes = (fecha) => {
+                const [dia, mesTexto] = fecha.split("-");
+                const fechaCompleta = new Date(`${mesTexto} ${dia}, ${a}`);
+                return fechaCompleta.getMonth() + 1 === parseInt(m);
+            };
+
+            const filtrar = (labels, data) => {
+                return labels.map((l, i) => ({ label: l, val: data[i] })).filter(p => esDelMes(p.label));
+            };
+
+            // Filtramos los datos
+            const memoriaFiltrada = filtrar(memoriaLabels, memoriaErrores);
+            const atencionFiltrada = filtrar(atencionLabels, atencionErrores);
+            const razonamientoFiltrada = filtrar(razonamientoLabels, razonamientoErrores);
+
+            memoriaChart.data.labels = memoriaFiltrada.map(p => p.label);
+            memoriaChart.data.datasets[0].data = memoriaFiltrada.map(p => p.val);
+            memoriaChart.update();
+
+            atencionChart.data.labels = atencionFiltrada.map(p => p.label);
+            atencionChart.data.datasets[0].data = atencionFiltrada.map(p => p.val);
+            atencionChart.update();
+
+            razonamientoChart.data.labels = razonamientoFiltrada.map(p => p.label);
+            razonamientoChart.data.datasets[0].data = razonamientoFiltrada.map(p => p.val);
+            razonamientoChart.update();
+        }
+
+        window.onload = inicializarGraficos;
     </script>
+</body>
+</html>

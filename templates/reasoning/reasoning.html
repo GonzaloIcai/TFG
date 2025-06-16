@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body class="bg-light">
+<body class="reasoning-container-bg">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
@@ -19,15 +19,17 @@
         </div>
     </nav>
 
-    <!-- Contenido -->
-    <div class="container text-center mt-5">
-        <h2 class="titulo-pagina">Juego de Razonamiento: Series Matemáticas</h2>
-        <p class="text-muted">Selecciona la opción que complete correctamente la serie.</p>
+    <!-- Contenedor centrado -->
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="memory-card-container text-center">
+            <h2 class="titulo-pagina">Juego de Razonamiento: Series Matemáticas</h2>
+            <p class="text-muted">Selecciona la opción que complete correctamente la serie.</p>
 
-        <div class="my-4" id="question" style="font-size: 1.5rem; font-weight: 500;"></div>
-        <div id="options" class="reasoning-board mb-4"></div>
+            <div class="my-4" id="question" style="font-size: 1.5rem; font-weight: 500;"></div>
+            <div id="options" class="reasoning-board mb-4"></div>
 
-        <button id="restartBtn" class="btn btn-success d-none" onclick="startGame()">Reiniciar Juego</button>
+            <button id="restartBtn" class="btn btn-success d-none" onclick="startGame()">Reiniciar Juego</button>
+        </div>
     </div>
 
     <!-- Modal de instrucciones -->
@@ -52,6 +54,7 @@
       </div>
     </div>
 
+    <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/reasoning/reasoning.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

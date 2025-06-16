@@ -3,36 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>Informe Cognitivo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
     <style>
-        .informe-container {
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .informe-wrapper {
+            max-width: 850px;
+            margin: 40px auto;
             background-color: #ffffff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
         }
+
         .titulo {
-            color: #2196f3;
+            color: #000000;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
+
         .subtitulo {
-            color: #555555;
+            color: #6c757d;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
         }
-        pre {
-            white-space: pre-wrap;
-            font-family: 'Segoe UI', sans-serif;
+
+        .contenido-informe {
+            background-color: #fafafa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .contenido-informe h1,
+        .contenido-informe h2,
+        .contenido-informe h3 {
+            font-weight: 600;
+            margin-top: 1.5rem;
+            color: #343a40;
+        }
+
+        .contenido-informe ul {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contenido-informe li {
+            margin-bottom: 0.5rem;
+        }
+
+        .botones {
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 576px) {
+            .informe-wrapper {
+                padding: 20px;
+            }
+
+            .titulo {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-<body class="bg-light">
-    <div class="container my-5">
-        <div class="informe-container">
-            <h2 class="titulo text-center">🧠 Informe Cognitivo Semanal</h2>
-            <p class="subtitulo text-center">Del {{ desde.strftime("%d/%m/%Y %H:%M") }} al {{ hasta.strftime("%d/%m/%Y %H:%M") }}</p>
-            <hr>
-            <pre>{{ informe }}</pre>
-            <div class="text-center mt-4">
-                <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-primary">Volver al Dashboard</a>
-            </div>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <img src="{{ url_for('static', filename='img/brain.png') }}" alt="Logo" class="logo-cerebro">
+                <span class="text-black">COGNITIV.AI</span>
+            </a>
+            <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-danger volver-btn">Volver</a>
+        </div>
+    </nav>
+    <div class="informe-wrapper">
+        <h2 class="titulo text-center">🧠 Informe Cognitivo Semanal</h2>
+        <p class="subtitulo text-center">Del {{ desde.strftime("%d/%m/%Y %H:%M") }} al {{ hasta.strftime("%d/%m/%Y %H:%M") }}</p>
+
+        <div class="contenido-informe">
+            {{ informe | safe }}
         </div>
     </div>
 </body>

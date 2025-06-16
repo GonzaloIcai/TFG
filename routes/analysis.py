@@ -4,37 +4,43 @@ from models.database import db, MemoryResult, AttentionResult, ReasoningResult, 
 from datetime import datetime, timedelta
 import openai
 import os
+import markdown
 
 analysis = Blueprint('analysis', __name__)
 
-# ✅ Configuración segura de la API Key desde variable de entorno
+# Configuración segura de la API Key desde variable de entorno
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 client = openai.OpenAI()
 
 # Función para construir el prompt a partir del JSON generado
 def construir_prompt(json_data):
     prompt = f"""
-Eres un neuropsicólogo experto en detección temprana de deterioro cognitivo.
-Analiza los resultados semanales de ejercicios cognitivos de un usuario mayor.
+Eres un neuropsicólogo especializado en envejecimiento cognitivo y desarrollo de planes personalizados de estimulación. Tu tarea es analizar los resultados de un usuario mayor que ha estado realizando ejercicios cognitivos en tres áreas: memoria, atención y razonamiento.
 
-Debes:
-1. Evaluar el rendimiento general en memoria, atención y razonamiento
-2. Detectar patrones de mejora o empeoramiento
-3. Sugerir ajustes de dificultad para cada tipo de ejercicio
-4. Indicar si hay señales tempranas de deterioro cognitivo leve (sin diagnosticar)
+Usa los datos semanales proporcionados a continuación para:
 
-Datos del usuario del {json_data['semana_del']} al {json_data['semana_hasta']}:
+1. Evaluar la evolución del rendimiento del usuario en cada tipo de ejercicio (memoria, atención y razonamiento), observando tendencias positivas, negativas o estancamiento.
+2. Detectar si hay alguna diferencia significativa entre áreas (por ejemplo, si mejora en memoria pero empeora en atención).
+3. Comentar si se observan días especialmente buenos o malos, inestabilidad o progresión constante.
+4. Emitir una conclusión general sobre el rendimiento cognitivo del usuario durante esta semana.
+5. Redactar recomendaciones personalizadas para continuar con el progreso o corregir retrocesos. Estas recomendaciones pueden incluir:
+   - ajustes de dificultad
+   - ejercicios complementarios
+   - hábitos saludables que favorezcan el rendimiento cognitivo
+6. (Opcional) Si observas un patrón que sugiera deterioro cognitivo leve (por ejemplo, empeoramiento sostenido en más de una área), indícalo con tacto, sin alarmismo.
 
-Memoria:
+**Tono del informe:** claro, empático y profesional. El texto debe ser entendible para un familiar o cuidador, sin tecnicismos. Evita frases genéricas: haz que el informe parezca redactado para este usuario en concreto.
+
+Resultados del usuario del {json_data['semana_del']} al {json_data['semana_hasta']}:
+
+🧠 Memoria:
 {json_data['memoria']}
 
-Atención:
+👁 Atención:
 {json_data['atencion']}
 
-Razonamiento:
+🔍 Razonamiento:
 {json_data['razonamiento']}
-
-Redacta un informe empático, directo y claro. Usa lenguaje entendible para familiares o cuidadores.
 """
     return prompt.strip()
 
@@ -56,9 +62,8 @@ def generar_analisis_gpt(prompt):
 @login_required
 def generar_informe_semanal():
     usuario_id = current_user.id
-    hoy = datetime.today()
-    lunes = hoy - timedelta(days=hoy.weekday())
-    domingo = lunes + timedelta(days=6)
+    lunes = datetime(2025, 5, 1)
+    domingo = datetime(2025, 5, 31, 23, 59, 59)
 
     memoria = MemoryResult.query.filter(
         MemoryResult.user_id == usuario_id,
@@ -95,11 +100,11 @@ def generar_informe_semanal():
 
     prompt = construir_prompt(informe)
     informe_gpt = generar_analisis_gpt(prompt)
+    informe_html = markdown.markdown(informe_gpt)
 
-    # Guardar en la base de datos
     nuevo_informe = Informe(
         user_id=current_user.id,
-        contenido=informe_gpt,
+        contenido=informe_html,
         fecha=datetime.now()
     )
     db.session.add(nuevo_informe)
@@ -107,7 +112,7 @@ def generar_informe_semanal():
 
     return jsonify({
         "datos": informe,
-        "informe": informe_gpt
+        "informe": informe_html
     })
 
 # Generar informe desde el último
@@ -115,8 +120,8 @@ def generar_informe_semanal():
 @login_required
 def generar_informe_desde_ultimo():
     usuario = current_user
-    desde_fecha = usuario.last_report or datetime(2000, 1, 1)
-    hasta_fecha = datetime.now()
+    desde_fecha = datetime(2025, 5, 1)
+    hasta_fecha = datetime(2025, 5, 31, 23, 59, 59)
 
     memoria = MemoryResult.query.filter(
         MemoryResult.user_id == usuario.id,
@@ -153,11 +158,11 @@ def generar_informe_desde_ultimo():
 
     prompt = construir_prompt(informe)
     analisis = generar_analisis_gpt(prompt)
+    analisis_html = markdown.markdown(analisis)
 
-    # Guardar en la base de datos
     nuevo_informe = Informe(
         user_id=current_user.id,
-        contenido=analisis,
+        contenido=analisis_html,
         fecha=datetime.now()
     )
     db.session.add(nuevo_informe)
@@ -168,15 +173,15 @@ def generar_informe_desde_ultimo():
 
     return jsonify({
         "datos": informe,
-        "informe": analisis
+        "informe": analisis_html
     })
 
 @analysis.route('/informe-vista')
 @login_required
 def informe_en_pantalla():
     usuario = current_user
-    desde_fecha = usuario.last_report or datetime(2000, 1, 1)
-    hasta_fecha = datetime.now()
+    desde_fecha = datetime(2025, 5, 1)
+    hasta_fecha = datetime(2025, 5, 31, 23, 59, 59)
 
     memoria = MemoryResult.query.filter(
         MemoryResult.user_id == usuario.id,
@@ -213,11 +218,11 @@ def informe_en_pantalla():
 
     prompt = construir_prompt(informe)
     analisis = generar_analisis_gpt(prompt)
+    analisis_html = markdown.markdown(analisis)
 
-    # Guardar en la base de datos
     nuevo_informe = Informe(
         user_id=current_user.id,
-        contenido=analisis,
+        contenido=analisis_html,
         fecha=datetime.now()
     )
     db.session.add(nuevo_informe)
@@ -226,4 +231,4 @@ def informe_en_pantalla():
     usuario.last_report = hasta_fecha
     db.session.commit()
 
-    return render_template("informe.html", informe=analisis, desde=desde_fecha, hasta=hasta_fecha)
+    return render_template("informe.html", informe=analisis_html, desde=desde_fecha, hasta=hasta_fecha)

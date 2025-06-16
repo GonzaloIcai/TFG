@@ -91,7 +91,8 @@ function terminarJuego() {
     const feedback = `✅ Juego terminado. Errores: ${errores}, Tiempo promedio: ${promedio.toFixed(2)}s`;
     document.getElementById("feedback").textContent = feedback;
 
-    fetch("/attention/save", {
+    // ✅ Ruta actualizada a /attention/stroop/save
+    fetch("/attention/stroop/save", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -101,7 +102,16 @@ function terminarJuego() {
             errors: errores,
             rounds_completed: rondasTotales
         })
-    }).then(res => console.log("Resultado de atención guardado."));
+    })
+    .then(res => {
+        if (res.ok) {
+            console.log("Resultado de atención (Stroop) guardado correctamente");
+        } else {
+            console.error("Error al guardar el resultado de Stroop");
+        }
+    })
+    .catch(err => console.error("Error de red:", err));
 }
+
 
 document.addEventListener("DOMContentLoaded", startStroop);

@@ -77,7 +77,7 @@ h1, h2, h5 {
 }
 
 .login-card {
-    background-color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     max-width: 400px;
     width: 100%;
@@ -90,7 +90,6 @@ h1, h2, h5 {
 
 
 /* ─────────────── JUEGO DE MEMORIA ─────────────── */
-
 .memory-board {
     display: grid;
     grid-template-columns: repeat(4, 90px);
@@ -125,16 +124,41 @@ h1, h2, h5 {
     transform: scale(1.05);
 }
 
+.memory-container-bg {
+    background: url("/static/img/memory_background.png") center/cover no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+}
+
+
+.memory-card-container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
 
 /* ─────────────── JUEGO DE ATENCIÓN ─────────────── */
 .attention-board {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(5, 80px); /* 👈 6 columnas fijas */
+    row-gap: 16px;
+    column-gap: 12px;
     justify-content: center;
     margin-top: 20px;
     padding: 0 10px;
 }
+
+
 
 .stroop-btn {
     font-size: 2rem;
@@ -152,6 +176,44 @@ h1, h2, h5 {
     transform: scale(1.05);
     background-color: #f0f0f0;
     cursor: pointer;
+}
+
+.attention-card {
+    width: 60px;
+    height: 60px;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.4s ease, transform 0.2s ease;
+}
+
+.attention-card:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.attention-card.correct {
+    background-color: #d4edda; /* verde claro */
+    border-color: #a3d5b1;
+}
+
+.attention-card.incorrect {
+    background-color: #f8d7da; /* rojo claro */
+    border-color: #f5c6cb;
+}
+
+.attention-container-bg {
+    background: url("/static/img/attention_background.png") center/cover no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -184,6 +246,14 @@ h1, h2, h5 {
     color: rgb(0, 0, 0) !important;
 }
 
+.reasoning-container-bg {
+    background: url("/static/img/reasoning_background.png") center/cover no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
 
 /* ─────────────── TABLA DE RESULTADOS ─────────────── */
 .custom-table {

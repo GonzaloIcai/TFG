@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body class="bg-light">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+<body class="memory-container-bg">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <a class="navbar-brand d-flex align-items-center gap-2" href="#">
                 <img src="{{ url_for('static', filename='img/brain.png') }}" alt="Logo" class="logo-cerebro">
@@ -18,40 +18,44 @@
             <a href="{{ url_for('dashboard.user_dashboard') }}" class="btn btn-outline-danger volver-btn">Volver</a>
         </div>
     </nav>
-    <div id="juegoMemoria" class="container text-center mt-5 d-none">
-        <h2 class="titulo-pagina">Juego de Memoria</h2>
-        <p class="text-muted">Encuentra todas las parejas de cartas</p>
 
-        <div class="game-board memory-board"></div>
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="memory-card-container">
+            <div id="juegoMemoria" class="container text-center mt-5 d-none">
+                <h2 class="titulo-pagina">Juego de Memoria</h2>
+                <p class="text-muted">Encuentra todas las parejas de cartas</p>
 
-        <button id="btnReiniciar" class="btn btn-success mt-3" onclick="startGame()">Reiniciar Juego</button>
+                <div class="game-board memory-board"></div>
+
+                <button id="btnReiniciar" class="btn btn-success mt-3" onclick="startGame()">Reiniciar Juego</button>
+            </div>
+        </div>
+    </div> 
+
+    <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+                </div>
+                <div class="modal-body text-start">
+                    <p>Tu objetivo es encontrar todas las parejas de cartas.</p>
+                    <ul>
+                        <li>Haz clic sobre una carta para revelarla.</li>
+                        <li>Luego haz clic en otra carta para ver si coincide.</li>
+                        <li>Si son iguales, se quedarán descubiertas.</li>
+                        <li>Intenta hacerlo en el menor tiempo y con los menos intentos posibles.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal" onclick="startGame()">Iniciar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/memory/memory.js') }}"></script>
-
-    <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-3">
-      <div class="modal-header">
-        <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
-      </div>
-      <div class="modal-body text-start">
-        <p>Tu objetivo es encontrar todas las parejas de cartas.</p>
-        <ul>
-          <li>Haz clic sobre una carta para revelarla.</li>
-          <li>Luego haz clic en otra carta para ver si coincide.</li>
-          <li>Si son iguales, se quedarán descubiertas.</li>
-          <li>Intenta hacerlo en el menor tiempo y con los menos intentos posibles.</li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal" onclick="startGame()">Iniciar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

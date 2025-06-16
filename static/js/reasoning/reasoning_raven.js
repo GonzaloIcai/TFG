@@ -16,6 +16,7 @@ const ejercicios = [
 let rondaActual = 0;
 let rondas = [];
 let aciertos = 0;
+let tiempoInicio = null;
 
 function seleccionarRondas() {
     const copia = [...ejercicios];
@@ -30,6 +31,7 @@ function startGame() {
     rondaActual = 0;
     aciertos = 0;
     rondas = seleccionarRondas();
+    tiempoInicio = Date.now();
     mostrarRonda();
 }
 
@@ -70,12 +72,32 @@ function verificarRespuesta(seleccion, botonSeleccionado) {
         if (rondaActual < 4) {
             mostrarRonda();
         } else {
+            const tiempoTotal = ((Date.now() - tiempoInicio) / 1000).toFixed(2);
+            const errores = 4 - aciertos;
+
             document.getElementById("feedback").textContent =
                 `✅ Has acertado ${aciertos} de 4 rondas.`;
+
+            fetch("/reasoning/raven/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    correct: aciertos,
+                    incorrect: errores,
+                    time_spent: tiempoTotal
+                })
+            }).then(res => {
+                if (res.ok) {
+                    console.log("Resultado de razonamiento visual guardado correctamente");
+                } else {
+                    console.error("Error al guardar resultado");
+                }
+            });
         }
     }, 2000);
 }
-
 
 // Modal instrucciones
 document.addEventListener("DOMContentLoaded", () => {
