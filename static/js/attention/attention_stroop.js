@@ -1,8 +1,15 @@
+
 const stroopPalabras = [
     { texto: "Rojo", color: "red" },
     { texto: "Azul", color: "blue" },
     { texto: "Verde", color: "green" },
-    { texto: "Amarillo", color: "orange" }
+    { texto: "Amarillo", color: "orange" },
+    { texto: "Morado", color: "purple" },
+    { texto: "Rosa", color: "pink" },
+    { texto: "Negro", color: "black" },
+    { texto: "Gris", color: "gray" },
+    { texto: "Marrón", color: "brown" },
+    { texto: "Cian", color: "cyan" }
 ];
 
 let rondasTotales = 5;
@@ -10,6 +17,7 @@ let rondaActual = 0;
 let errores = 0;
 let tiempos = [];
 let startTime;
+let indiceCorrectoGlobal = null;
 
 function startStroop() {
     rondaActual = 0;
@@ -29,61 +37,78 @@ function siguienteRonda() {
     const board = document.getElementById("stroop-board");
     board.innerHTML = "";
 
-    // 1. Elegimos una palabra base (texto y color coinciden)
-    const base = stroopPalabras[Math.floor(Math.random() * stroopPalabras.length)];
+    const correctas = [];
+    const yaUsadas = new Set();
 
-    // 2. Creamos tres iguales
-    const opciones = [
-        { texto: base.texto, color: base.color },
-        { texto: base.texto, color: base.color },
-        { texto: base.texto, color: base.color }
-    ];
+    while (correctas.length < 3) {
+        const opcion = stroopPalabras[Math.floor(Math.random() * stroopPalabras.length)];
+        if (!yaUsadas.has(opcion.texto)) {
+            correctas.push({ texto: opcion.texto, color: opcion.color });
+            yaUsadas.add(opcion.texto);
+        }
+    }
 
-    // 3. Escogemos la diferente (que tenga texto ≠ base.texto)
-    let distinta;
+    let textoIncorrecto, colorIncorrecto;
     do {
-        distinta = stroopPalabras[Math.floor(Math.random() * stroopPalabras.length)];
-    } while (distinta.texto === base.texto);
+        textoIncorrecto = stroopPalabras[Math.floor(Math.random() * stroopPalabras.length)];
+        colorIncorrecto = stroopPalabras[Math.floor(Math.random() * stroopPalabras.length)];
+    } while (
+        textoIncorrecto.texto === colorIncorrecto.texto ||
+        textoIncorrecto.color === colorIncorrecto.color ||
+        yaUsadas.has(textoIncorrecto.texto)
+    );
 
-    // 4. Color incorrecto ≠ texto de la palabra distinta y ≠ color de base
-    const coloresDisponibles = stroopPalabras
-        .map(p => p.color)
-        .filter(c => c !== distinta.color && c !== base.color);
-
-    const colorIncorrecto = coloresDisponibles[Math.floor(Math.random() * coloresDisponibles.length)];
-
-    const opcionDiferente = {
-        texto: distinta.texto,
-        color: colorIncorrecto
+    const opcionIncorrecta = {
+        texto: textoIncorrecto.texto,
+        color: colorIncorrecto.color
     };
 
-    // 5. Insertamos en posición aleatoria
+    const opciones = [...correctas, opcionIncorrecta];
     const indiceDiferente = Math.floor(Math.random() * 4);
-    opciones.splice(indiceDiferente, 0, opcionDiferente);
+    [opciones[3], opciones[indiceDiferente]] = [opciones[indiceDiferente], opciones[3]];
+    indiceCorrectoGlobal = indiceDiferente;
 
-    // 6. Renderizamos
     opciones.forEach((opcion, index) => {
         const btn = document.createElement("button");
-        btn.className = "btn fs-4 m-2 px-4 py-3 border rounded shadow";
+        btn.className = "btn fs-4 fw-bold m-2 px-4 py-3 border rounded shadow";
         btn.textContent = opcion.texto;
         btn.style.color = opcion.color;
+        btn.dataset.index = index;
         btn.style.transition = "all 0.2s ease";
         btn.onmouseover = () => btn.style.transform = "scale(1.1)";
         btn.onmouseleave = () => btn.style.transform = "scale(1)";
-        btn.onclick = () => verificarRespuesta(index === indiceDiferente);
+        btn.onclick = (e) => verificarRespuesta(index === indiceCorrectoGlobal, e.target);
         board.appendChild(btn);
     });
 
     startTime = Date.now();
 }
 
-function verificarRespuesta(acertado) {
+function verificarRespuesta(acertado, clickedBtn) {
     const tiempo = (Date.now() - startTime) / 1000;
     tiempos.push(tiempo);
     if (!acertado) errores++;
 
-    rondaActual++;
-    siguienteRonda();
+    const botones = document.querySelectorAll("#stroop-board button");
+
+    // Desactivar todos los botones
+    botones.forEach(btn => btn.onclick = null);
+
+    if (acertado) {
+        clickedBtn.style.backgroundColor = "#c8f7c5"; // verde claro
+    } else {
+        clickedBtn.style.backgroundColor = "#f8c8c8"; // rojo claro
+        botones.forEach(btn => {
+            if (parseInt(btn.dataset.index) === indiceCorrectoGlobal) {
+                btn.style.backgroundColor = "#c8f7c5"; // correcta → verde claro
+            }
+        });
+    }
+
+    setTimeout(() => {
+        rondaActual++;
+        siguienteRonda();
+    }, 1500);
 }
 
 function terminarJuego() {
@@ -91,7 +116,6 @@ function terminarJuego() {
     const feedback = `✅ Juego terminado. Errores: ${errores}, Tiempo promedio: ${promedio.toFixed(2)}s`;
     document.getElementById("feedback").textContent = feedback;
 
-    // ✅ Ruta actualizada a /attention/stroop/save
     fetch("/attention/stroop/save", {
         method: "POST",
         headers: {
@@ -113,5 +137,16 @@ function terminarJuego() {
     .catch(err => console.error("Error de red:", err));
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    const instruccionesModal = new bootstrap.Modal(document.getElementById('instruccionesModal'));
+    instruccionesModal.show();
 
-document.addEventListener("DOMContentLoaded", startStroop);
+    document.getElementById("btn-iniciar").addEventListener("click", () => {
+        instruccionesModal.hide();
+        setTimeout(() => {
+            document.body.classList.remove('modal-open');
+            document.querySelector('.modal-backdrop')?.remove();
+            startStroop();
+        }, 300);
+    });
+});

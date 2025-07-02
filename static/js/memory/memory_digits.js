@@ -66,5 +66,16 @@ function startGame() {
 document.addEventListener("DOMContentLoaded", () => {
     const instruccionesModal = new bootstrap.Modal(document.getElementById('instruccionesModal'));
     instruccionesModal.show();
+
+    const btnIniciar = document.getElementById("btn-iniciar");
+    btnIniciar.addEventListener("click", () => {
+        instruccionesModal.hide();
+        setTimeout(() => {
+            document.body.classList.remove('modal-open');
+            document.querySelector('.modal-backdrop')?.remove();
+            startGame();
+        }, 300);
+    });
 });
+
 

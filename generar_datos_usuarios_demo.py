@@ -35,13 +35,13 @@ def generar_datos_fake(user_email, patron):
             i = dia - 1
 
             if patron == 'mejora':
-                base_attempts = max(1, 12 - i * 0.3)
+                base_attempts = max(4, 12 - i * 0.3)
                 attempts = int(base_attempts + uniform(-1, 1))
 
-                base_attention = max(0, 8 - i * 0.2)
+                base_attention = max(0, 10 - i * 0.2)
                 attention_errors = int(max(0, base_attention + uniform(-1, 1)))
 
-                base_reasoning = max(0, 5 - i * 0.2)
+                base_reasoning = max(0, 10 - i * 0.2)
                 reasoning_wrong = int(max(0, base_reasoning + uniform(-1, 1)))
 
                 time_spent = round(90 - i * 1.3 + uniform(-5, 5), 2)
@@ -52,11 +52,11 @@ def generar_datos_fake(user_email, patron):
                 base_attempts = min(20, 5 + i * 0.4)
                 attempts = int(base_attempts + uniform(-1, 1))
 
-                base_attention = min(10, 2 + i * 0.25)
+                base_attention = min(10, 2 + i * 0.2)
                 attention_errors = int(min(10, base_attention + uniform(-1, 1)))
 
-                base_reasoning = min(4, 1 + i * 0.15)
-                reasoning_wrong = int(min(4, base_reasoning + uniform(-1, 1)))
+                base_reasoning = min(10, 1 + i * 0.2)
+                reasoning_wrong = int(min(10, base_reasoning + uniform(-1, 1)))
 
                 time_spent = round(60 + i * 2.2 + uniform(-5, 5), 2)
                 average_time = round(2 + i * 0.08 + uniform(-0.3, 0.3), 2)
@@ -88,12 +88,14 @@ def generar_datos_fake(user_email, patron):
                 
 
             elif patron == 'empeora_atencion_solo':
-                attempts = randint(8, 11)
+                base_attempts = min(12, 10 + i * 0.1)
+                attempts = int(base_attempts + uniform(-1, 1))
                
-                base_attention = min(10, 2 + i * 0.25)
+                base_attention = min(10, 2 + i * 0.2)
                 attention_errors = int(min(10, base_attention + uniform(-1, 1)))
 
-                reasoning_wrong = 1
+                base_reasoning = min(7, 5 + i * 0.1)
+                reasoning_wrong = int(min(10, base_reasoning + uniform(-1, 1)))
 
                 time_spent = round(uniform(70, 85), 2)
                 average_time = round(2 + i * 0.08 + uniform(-0.3, 0.3), 2)
@@ -141,12 +143,7 @@ def generar_datos_fake(user_email, patron):
 # ==== EJECUCIÓN DE LOS CASOS CLAVE DEL TFG ====
 if __name__ == "__main__":
     usuarios_y_patrones = [
-        ("caso_mejora_global@test.com", "mejora"),
-        ("caso_empeora_global@test.com", "empeora"),
-        ("caso_neutro@test.com", "neutro"),
-        ("caso_empeora_memoria@test.com", "empeora_memoria_solo"),
         ("caso_empeora_atencion@test.com", "empeora_atencion_solo"),
-        ("caso_empeora_razonamiento@test.com", "empeora_razonamiento_solo")
     ]
 
     for email, patron in usuarios_y_patrones:

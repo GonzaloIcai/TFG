@@ -79,6 +79,22 @@
                 font-size: 1.5rem;
             }
         }
+
+    
+        /* Estilo para títulos de secciones como "Memoria:", "Atención:"... */
+
+        .contenido-informe p {
+            text-align: justify;
+        }
+
+        .contenido-informe .titulo-seccion {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-top: 1rem;
+            margin-bottom: 0.4rem;
+            color: #343a40;
+        }
+        
     </style>
 </head>
 
@@ -93,8 +109,7 @@
         </div>
     </nav>
     <div class="informe-wrapper">
-        <h2 class="titulo text-center">🧠 Informe Cognitivo Semanal</h2>
-        <p class="subtitulo text-center">Del {{ desde.strftime("%d/%m/%Y %H:%M") }} al {{ hasta.strftime("%d/%m/%Y %H:%M") }}</p>
+        <h2 class="titulo text-center">🧠 Informe Cognitivo Mensual</h2>
 
         <div class="contenido-informe">
             {{ informe | safe }}

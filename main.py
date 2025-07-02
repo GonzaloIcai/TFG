@@ -16,6 +16,7 @@ from routes.perfil import perfil
 from routes.graficos import graficos
 from routes.historial import historial
 
+from routes.analysis_simulados import analysis_simulados
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -49,8 +50,15 @@ app.register_blueprint(perfil)
 app.register_blueprint(graficos)
 app.register_blueprint(historial)
 
+app.register_blueprint(analysis_simulados)
+
+
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()  # Creo la base de datos si no existe
     app.run(debug=True)
+
+
+
+

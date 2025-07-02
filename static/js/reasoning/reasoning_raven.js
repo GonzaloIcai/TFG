@@ -44,28 +44,37 @@ function mostrarRonda() {
 
     ejercicio.opciones.forEach(opcion => {
         const btn = document.createElement("button");
-        btn.className = "btn btn-outline-dark fs-5 btn-opcion";
+        btn.className = "btn btn-sm fw-bold px-3 py-2 border rounded shadow btn-opcion";
         btn.textContent = opcion;
+        btn.style.transition = "all 0.2s ease";
+        btn.style.minWidth = "110px";
+        btn.onmouseover = () => btn.style.transform = "scale(1.1)";
+        btn.onmouseleave = () => btn.style.transform = "scale(1)";
         btn.onclick = () => verificarRespuesta(opcion, btn);
         opcionesDiv.appendChild(btn);
     });
 }
+
 
 function verificarRespuesta(seleccion, botonSeleccionado) {
     const ejercicio = rondas[rondaActual];
     const esCorrecta = seleccion === ejercicio.correcta;
 
     const botones = document.querySelectorAll(".btn-opcion");
-    botones.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === ejercicio.correcta) {
-            btn.classList.add("btn-correcta");
-        } else if (btn === botonSeleccionado) {
-            btn.classList.add("btn-incorrecta");
-        }
-    });
+    botones.forEach(btn => btn.disabled = true);
 
-    if (esCorrecta) aciertos++;
+    if (esCorrecta) {
+        botonSeleccionado.style.backgroundColor = "#c8f7c5"; // verde claro
+        aciertos++;
+    } else {
+        botonSeleccionado.style.backgroundColor = "#f8c8c8"; // rojo claro
+        botones.forEach(btn => {
+            if (btn.textContent === ejercicio.correcta) {
+                btn.style.backgroundColor = "#c8f7c5"; // marcar la correcta
+            }
+        });
+    }
+
     rondaActual++;
 
     setTimeout(() => {
@@ -96,8 +105,9 @@ function verificarRespuesta(seleccion, botonSeleccionado) {
                 }
             });
         }
-    }, 2000);
+    }, 1500); // Espera 1.5 segundos antes de pasar a la siguiente ronda
 }
+
 
 // Modal instrucciones
 document.addEventListener("DOMContentLoaded", () => {

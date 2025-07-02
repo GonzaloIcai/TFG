@@ -28,31 +28,34 @@
             <div class="my-4" id="question" style="font-size: 1.5rem; font-weight: 500;"></div>
             <div id="options" class="reasoning-board mb-4"></div>
 
-            <button id="restartBtn" class="btn btn-success d-none" onclick="startGame()">Reiniciar Juego</button>
+            <button id="restartBtn" class="btn btn-warning text-dark" onclick="startGame()">Reiniciar Juego</button> 
         </div>
     </div>
 
-    <!-- Modal de instrucciones -->
-    <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-3">
-          <div class="modal-header">
-            <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
-          </div>
-          <div class="modal-body text-start">
-            <p>En cada ronda se te mostrará una serie de números.</p>
-            <ul>
-              <li>Debes identificar el patrón lógico.</li>
-              <li>Haz clic en la opción que crees que completa la serie.</li>
-              <li>El juego tiene 4 rondas diferentes, ¡buena suerte!</li>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-primary w-100" id="iniciarBtn">Iniciar</button>
-          </div>
+  <!-- Modal de instrucciones -->
+  <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold text-center w-100" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+        </div>
+        <div class="modal-body text-start">
+          <p>Este ejercicio trabaja tu razonamiento lógico a través de secuencias numéricas:</p>
+          <ul>
+            <li>En cada ronda verás una serie de números con un elemento faltante al final.</li>
+            <li>Analiza el patrón (puede ser una suma, resta o multiplicación sencilla).</li>
+            <li>Selecciona la opción que consideres que completa correctamente la serie.</li>
+            <li>El juego incluye 4 rondas con series diferentes.</li>
+          </ul>
+          <p class="mt-2 mb-0"><strong>Consejo:</strong> Piensa con calma y observa las diferencias entre los números. A veces el patrón es más simple de lo que parece.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning text-dark w-100" id="iniciarBtn">Iniciar</button>
         </div>
       </div>
     </div>
+  </div>
+
 
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/reasoning/reasoning.js') }}"></script>

@@ -30,7 +30,7 @@
 
                 <div id="attention-board" class="game-board attention-board mt-4"></div>
 
-                <button class="btn btn-info mt-4" onclick="startAttentionGame()">Reiniciar</button>
+                <!--<button class="btn btn-info mt-4" onclick="startAttentionGame()">Reiniciar</button>-->
             </div>
         </div>
     </div>
@@ -40,18 +40,20 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-3">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+                    <h5 class="modal-title fw-bold text-center w-100" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
                 </div>
                 <div class="modal-body text-start">
-                    <p>Haz clic sobre el emoji que sea diferente al resto.</p>
+                    <p>Este ejercicio entrena tu atención y percepción visual:</p>
                     <ul>
-                        <li>Solo un emoji es distinto en cada ronda.</li>
-                        <li>Debes encontrarlo y hacer clic en él.</li>
-                        <li>El juego tiene 5 rondas. Se mide el tiempo de respuesta y errores.</li>
+                        <li>En cada ronda verás una cuadrícula llena de emojis.</li>
+                        <li>Todos los emojis son iguales excepto uno que es ligeramente diferente.</li>
+                        <li>Tu objetivo es encontrarlo y hacer clic sobre él lo más rápido posible.</li>
+                        <li>El número de rondas es limitado y los emojis cambian en cada una.</li>
                     </ul>
+                    <p class="mt-2 mb-0"><strong>Consejo:</strong> Observa con calma antes de hacer clic, algunas diferencias pueden ser sutiles.</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="btn-iniciar" class="btn btn-info w-100">Iniciar</button>
+                    <button id="btn-iniciar" class="btn btn-info text-dark w-100">Iniciar</button>
                 </div>
             </div>
         </div>

@@ -35,22 +35,25 @@
         </div>
     </div>
 
+    <!-- Modal de instrucciones -->
     <div class="modal fade" id="instruccionesModal" tabindex="-1" aria-labelledby="instruccionesModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content p-3">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
+                    <h5 class="modal-title fw-bold text-center w-100" id="instruccionesModalLabel">🧠 Instrucciones del Juego</h5>
                 </div>
                 <div class="modal-body text-start">
-                    <p>Este juego pone a prueba tu memoria inmediata con series de números:</p>
+                    <p>Este ejercicio entrena tu memoria inmediata mediante secuencias numéricas:</p>
                     <ul>
-                        <li>Verás una secuencia breve de dígitos (ej. 3 - 5 - 1).</li>
-                        <li>Deberás escribirla de memoria exactamente en el mismo orden.</li>
-                        <li>Se completan 5 rondas en total.</li>
+                        <li>Verás una secuencia corta de dígitos, como por ejemplo: 3 – 5 – 1.</li>
+                        <li>Memoriza la secuencia y escríbela a continuación en el mismo orden.</li>
+                        <li>La longitud de la secuencia puede variar ligeramente entre rondas.</li>
+                        <li>Dispones de 5 rondas para practicar tu capacidad de retención.</li>
                     </ul>
+                    <p class="mt-2 mb-0"><strong>Consejo:</strong> Concéntrate y repite mentalmente la secuencia justo después de verla.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal" onclick="startGame()">Iniciar</button>
+                    <button id="btn-iniciar" class="btn btn-success text-dark w-100">Iniciar</button>
                 </div>
             </div>
         </div>
